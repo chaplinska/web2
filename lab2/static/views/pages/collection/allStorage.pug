@@ -1,0 +1,11 @@
+extends ../../layout.pug
+
+block prepend styles
+    link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+    each next in acc
+        div= 'Склад № ' + next.storage + '. Кількість товарів ' + next.goodsInStorage + '. Максимальна місткість: ' + next.allGoods
+        ul
+            each val, key in next.goods
+                li= 'Товар з № ' + key + ': ' + val

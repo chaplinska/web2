@@ -1,0 +1,12 @@
+.list-wrapper {
+  margin-top: 20px;
+}
+
+.list-icon {
+  display: inline-block;
+  margin-right: 5px;
+}
+form{
+  flex-direction: column;
+  display: flex;
+}

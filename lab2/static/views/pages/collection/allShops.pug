@@ -1,0 +1,10 @@
+extends ../../layout.pug
+
+block prepend styles
+    link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+    each val in data
+        p= 'Магазин ' + val.name
+        p= ' З адресою ' + val.address
+        br
