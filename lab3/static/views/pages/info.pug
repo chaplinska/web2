@@ -1,0 +1,58 @@
+extends ../layout.pug
+
+block prepend styles
+    link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+
+
+        div(class='breadcrumb')
+            a(href=`/shops/${fix}/transfer`) Transfer
+
+        div(class='')
+            div(class='text-center')
+                h3= 'Наш магазин: ' + data.shop.name
+            div(class='')
+                p Його склади
+                each val, index in data.storage
+                    p= 'Номер ' + val.number + '.'
+                    ul
+                        each go in val.goodsInStorage
+                            li= 'Товар з № ' + go.code + '.  Назва: ' + go.name
+            div(class='')
+                p Його товар на полицях
+                ul
+                    if shopka.goodsInShop.length === 0
+                        p Товару іще немає, добавте його
+                    else
+                        each val in shopka.goodsInShop
+                            li= 'Товар з № ' + val.code + '.  Назва: ' + val.name
+            form(id='shop-delete-form' name='shop-add-form' class='form-inline' action=`/shops/${fix}` method='POST')
+
+                div(class='')
+                    label Вибери склад
+                div(class='')
+                    select(name='indexSt')
+                        each val, index in data.storage
+                            option= index + ' .Номер ' + val.number + '.'
+                div(class='')
+                    label Вибери товар
+                div(class='')
+                    select(name='indexGoods')
+                        each val, index in data.allGoods
+                            option= index + ' .Код ' + val.code + ' .Назва: ' + val.name
+                div(class='form-group')
+                    div(class='col-md-12')
+                        button(type='submit' class='btn btn-primary') Add to shop
+
+
+
+
+
+
+
+
+block append scripts
+    script(src='/static/js/models/shop.js')
+    script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+    script(src='/static/js/views/shop.js')

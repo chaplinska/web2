@@ -1,0 +1,36 @@
+extends ../../layout.pug
+
+block prepend styles
+    link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+    br
+    div(class='breadcrumb')
+        li Додавання товару в колекцію
+    form(id='shop-add-form' name='shop-add-form' class='form-inline' action='/addGoods' method='POST')
+        label(for='name') Code
+            input(id='name' name='code' value='' class='form-control')
+        label(for='name') Name
+            input(id='' name='name' value='' class='form-control')
+        label(for='name') Country
+            input(id='Country' name='country' value='' class='form-control')
+        span
+            button(type='submit' class='btn btn-primary') Add
+    br
+    each val in data
+        p= 'Товар ' + val.name
+        p= ' З Кодом ' + val.code + '. Та країною: ' + val.country
+        br
+
+        form(id='shop-edit-form' name='shop-add-form' class='form-inline' action=`/editGoods/${val._id}` method='POST')
+            label(for='name') New Name
+                input( name='name' value='' class='form-control')
+            label(for='name') New Country
+                input( name='country' value='' class='form-control')
+            span
+                button(type='submit' class='btn btn-primary') Edit
+        hr
+        form(id='shop-add-form' name='shop-add-form' class='form-inline' action=`/deleteGoodId/${val._id}` method='POST')
+            span
+                button(type='submit'  class='btn btn-primary') Delete
+        hr
