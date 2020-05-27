@@ -1,0 +1,34 @@
+extends ../layout.pug
+
+block prepend styles
+    link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+    div(class='breadcrumb')
+        li Звіт по складах у яких кількість одиниць товару менша від 20% від місткості
+    form(id='' name='shop-add-form' class='form-inline' action='/report' method='POST')
+        div(class='')
+            button(type='submit' class='btn btn-primary') Перевірити склади
+        if !data
+            p Ваш результат буде тут!
+        else if data
+            each next in data
+                div= 'Склад № ' + next.number + '. Кількість товарів ' + next.goodsInStorage.length + '. Усього товарів ' + next.capacity
+    br
+    div(class='breadcrumb')
+        li Звіт одиниць товару на заданому складі
+    div
+        each next in acc
+            div= 'Склад № ' + next.storage + '. Кількість товарів ' + next.goodsInStorage
+            ul
+                each val, key in next.goods
+                    li= 'Товар з № ' + key + ': ' + val
+
+
+
+
+
+block append scripts
+    script(src='/static/js/models/shop.js')
+    script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+    script(src='/static/js/views/shop.js')

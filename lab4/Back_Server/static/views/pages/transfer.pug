@@ -1,0 +1,49 @@
+extends ../layout.pug
+
+block prepend styles
+    link(rel='stylesheet' href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css')
+
+block content
+
+    div(class='')
+        div(class='text-center')
+            h3= 'Наш магазин: ' + data.shop.name
+        div(class='')
+            p Його склади
+            each val, index in data.storage
+                p= 'Номер ' + val.number + '.'
+                ul
+                    each go in val.goodsInStorage
+                        li= 'Товар з № ' + go.code + '.  Назва: ' + go.name
+    if data.storage.length <= 1
+        p Трансфер товару неможливий
+    else
+        form(id='shop-delete-form' name='shop-add-form' class='form-inline' action=`/shops/${fix}/transfer` method='POST')
+
+            div(class='')
+                label Вибери склад з якого перемістити товар
+            div(class='')
+                select(name='indexOne')
+                    each val, index in data.storage
+                        option= index + ' .Номер ' + val.number + '.'
+            div(class='')
+                label Вибери склад куди перемістити товар
+            div(class='')
+                select(name='indexTwo')
+                    each val, index in data.storage
+                        option= index + ' .Номер ' + val.number + '.'
+            div(class='')
+                label Вибери товар
+            div(class='')
+                select(name='indexGoods')
+                    each val, index in data.allGoods
+                        option= index + ' .Код ' + val.code + ' .Назва: ' + val.name
+            div(class='form-group')
+                div(class='col-md-12')
+                    button(type='submit' class='btn btn-primary') Replace
+            p= info
+
+    block append scripts
+        script(src='/static/js/models/shop.js')
+        script(src='//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js')
+        script(src='/static/js/views/shop.js')
